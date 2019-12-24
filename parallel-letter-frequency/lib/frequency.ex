@@ -22,14 +22,19 @@ defmodule Frequency do
   end
 
   defp count_letters(graphemes) do
-    Eunum.reduce(graphemes, %{}, fn grapheme, acc ->
-      nil
+    Enum.reduce(graphemes, %{}, fn grapheme, acc ->
       # if grapheme is a letter
       # downcase
       # increment count of letter in acc
+      if String.match?(grapheme, ~r/^\p{L}$/u) do
+        downcased_letter = String.downcase(grapheme)
+        Map.update(acc, downcased_letter, 1, fn count -> count + 1 end)
 
-      # else
-      # nothing
+        # else
+        # do nothing
+      else
+        acc
+      end
     end)
   end
 end
