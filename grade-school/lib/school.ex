@@ -13,13 +13,13 @@ defmodule School do
     # %{}
     # %{2 => ["Aimee"]}
     # %{2 => ["Aimee", "Percy"]}
+    db
+    |> Map.update(grade, [name], fn current_list -> [name | current_list] end)
 
-    current_list = Map.get(db, grade, [])
-
-    updated_list = [name | current_list]
-
-    # (current_list ++ [name]) |> IO.inspect()
-    Map.put(db, grade, updated_list)
+    # current_list = Map.get(db, grade, [])
+    # updated_list = [name | current_list]
+    ## (current_list ++ [name]) |> IO.inspect()
+    # Map.put(db, grade, updated_list)
   end
 
   @doc """
@@ -27,6 +27,11 @@ defmodule School do
   """
   @spec grade(map, integer) :: [String.t()]
   def grade(db, grade) do
+    # %{2 => ["Aimee"]}
+    # db[2] ~= Map.get(db, 2)
+    # db[grade] || [] ~= db |> Map.get(grade, [])
+    db
+    |> Map.get(grade, [])
   end
 
   @doc """
@@ -34,5 +39,9 @@ defmodule School do
   """
   @spec sort(map) :: [{integer, [String.t()]}]
   def sort(db) do
+    db
+    |> IO.inspect()
+    |> Map.to_list()
+    |> Enum.map(fn {grade, list_of_students} -> {grade, Enum.sort(list_of_students)} end)
   end
 end

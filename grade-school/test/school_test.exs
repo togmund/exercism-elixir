@@ -41,23 +41,26 @@ defmodule SchoolTest do
     assert Enum.sort(actual) == ["Bradley", "Franklin"]
   end
 
-  @tag :pending
+  # @tag :pending
   test "get students in a non existent grade" do
     assert [] == School.grade(@db, 1)
   end
 
-  @tag :pending
+  # @tag :pending
   test "sort school by grade and by student name" do
     actual =
       @db
       |> School.add("Bart", 4)
       |> School.add("Jennifer", 4)
+      |> School.add("Greg", 1)
+      |> School.add("Jeff", 1)
       |> School.add("Christopher", 4)
       |> School.add("Kareem", 6)
       |> School.add("Kyle", 3)
       |> School.sort()
 
     expected = [
+      {1, ["Greg", "Jeff"]},
       {3, ["Kyle"]},
       {4, ["Bart", "Christopher", "Jennifer"]},
       {6, ["Kareem"]}
